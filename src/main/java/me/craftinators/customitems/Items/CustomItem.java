@@ -5,4 +5,5 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class CustomItem implements Listener  {
     public abstract ItemStack getItem();
+    public abstract boolean isItem(ItemStack item);
 }

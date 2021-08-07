@@ -12,6 +12,7 @@ public final class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(new EndlessWaterBucket(), this);
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
