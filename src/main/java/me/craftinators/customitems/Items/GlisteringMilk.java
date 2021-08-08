@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -42,7 +43,14 @@ public class GlisteringMilk extends CustomItem {
     @EventHandler
     public void onPlayerItemConsume(PlayerItemConsumeEvent event) {
         if(!isItem(event.getItem())) return;
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 4));
+
+        Player player = event.getPlayer();
+
+        for (PotionEffect effect : player.getActivePotionEffects())
+            player.removePotionEffect(effect.getType());
+        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20, 4));
+
+        event.setCancelled(true);
     }
 
     private void addRecipe(JavaPlugin plugin) {
