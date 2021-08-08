@@ -15,10 +15,14 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
-public final class EndlessWaterBucket extends CustomItem {
+public class EndlessWaterBucket extends CustomItem {
+    public EndlessWaterBucket(JavaPlugin plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
 
     @Override
     public ItemStack getItem() {
@@ -37,18 +41,15 @@ public final class EndlessWaterBucket extends CustomItem {
         if (item.getType() != Material.WATER_BUCKET) return false;
 
         ItemMeta meta = item.getItemMeta();
-        if (!meta.hasCustomModelData() || meta.getCustomModelData() != 1) return false;
-        return true;
+        return meta.hasCustomModelData() && meta.getCustomModelData() == 1;
     }
 
     @EventHandler
     public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event) {
+        if (event.getPlayer().getWorld().getEnvironment() == Environment.NETHER) return;
         if (!isItem(event.getPlayer().getInventory().getItemInMainHand())) return;
 
-        if (event.getPlayer().getWorld().getEnvironment() != Environment.NETHER) {
-            getBucketEmptyLocation(event).setType(Material.WATER);
-        }
-
+        getBucketEmptyLocation(event).setType(Material.WATER);
         event.setCancelled(true);
     }
 

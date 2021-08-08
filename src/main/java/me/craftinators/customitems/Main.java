@@ -1,27 +1,24 @@
 package me.craftinators.customitems;
 
+import me.craftinators.customitems.Items.Coffee;
 import me.craftinators.customitems.Items.EndlessWaterBucket;
-import org.bukkit.event.EventHandler;
+import me.craftinators.customitems.Items.GlisteringMilk;
+import me.craftinators.customitems.Items.SugarCookie;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        getServer().getPluginManager().registerEvents(new EndlessWaterBucket(), this);
-        getServer().getPluginManager().registerEvents(this, this);
+        new Coffee(this);
+        new EndlessWaterBucket(this);
+        new GlisteringMilk(this);
+        new SugarCookie(this);
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-    }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        event.getPlayer().getInventory().addItem(new EndlessWaterBucket().getItem());
     }
 }
