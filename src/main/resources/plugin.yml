@@ -1,4 +1,4 @@
-name: CustomItems
+name: FluffItems
 version: ${project.version}
 main: me.craftinators.customitems.Main
 api-version: 1.17
